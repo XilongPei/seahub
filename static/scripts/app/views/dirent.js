@@ -59,6 +59,7 @@ define([
                 is_repo_owner: dir.is_repo_owner,
                 is_virtual: dir.is_virtual,
                 repo_encrypted: dir.encrypted,
+                is_admin: dir.is_admin,
                 has_been_shared_out: dir.has_been_shared_out,
 
                 can_generate_share_link: app.pageOptions.can_generate_share_link,

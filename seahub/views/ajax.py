@@ -286,35 +286,32 @@ def list_lib_dir(request, repo_id):
 
     result["is_repo_owner"] = False
     result["has_been_shared_out"] = False
+    result["is_admin"] = is_repo_admin(username, repo_id)
     if repo_owner == username:
         result["is_repo_owner"] = True
 
-        try:
-            if is_org_context(request):
-                org_id = request.user.org.org_id
+    try:
+        if is_org_context(request):
+            org_id = request.user.org.org_id
 
-                is_inner_org_pub_repo = False
-                # check if current repo is pub-repo
-                org_pub_repos = seafile_api.list_org_inner_pub_repos_by_owner(
-                        org_id, username)
-                for org_pub_repo in org_pub_repos:
-                    if repo_id == org_pub_repo.id:
-                        is_inner_org_pub_repo = True
-                        break
+            is_inner_org_pub_repo = False
+            # check if current repo is pub-repo
+            org_pub_repos = seafile_api.list_org_inner_pub_repos_by_owner(
+                    org_id, username)
+            for org_pub_repo in org_pub_repos:
+                if repo_id == org_pub_repo.id:
+                    is_inner_org_pub_repo = True
+                    break
 
-                if seafile_api.list_org_repo_shared_group(org_id, username, repo_id) or \
-                        seafile_api.list_org_repo_shared_to(org_id, username, repo_id) or \
-                        is_inner_org_pub_repo:
-                    result["has_been_shared_out"] = True
-            else:
-                if seafile_api.list_repo_shared_to(username, repo_id) or \
-                        seafile_api.list_repo_shared_group_by_user(username, repo_id) or \
-                        (not request.cloud_mode and seafile_api.is_inner_pub_repo(repo_id)):
-                    result["has_been_shared_out"] = True
-        except Exception as e:
-            logger.error(e)
+            if seafile_api.org_repo_has_been_shared(org_id, repo_id, including_groups=True) or is_inner_org_pub_repo:
+                result["has_been_shared_out"] = True
+        else:
+            if seafile_api.repo_has_been_shared(repo_id, including_groups=True) or \
+                    (not request.cloud_mode and seafile_api.is_inner_pub_repo(repo_id)):
+                result["has_been_shared_out"] = True
+    except Exception as e:
+        logger.error(e)
 
-    result["is_admin"] = is_repo_admin(username, repo_id)
 
     result["is_virtual"] = repo.is_virtual
     result["repo_name"] = repo.name
