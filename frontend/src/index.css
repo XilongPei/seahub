@@ -1,0 +1,400 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+/**editor style */
+html body{
+  height: 100%;
+}
+
+html,
+input,
+textarea {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.4;
+  background: #eee;
+}
+
+body {
+  margin: 0;
+  overflow-y: hidden;
+}
+
+p {
+  margin: 0;
+}
+
+pre {
+  padding: 10px;
+  background-color: #eee;
+  white-space: pre-wrap;
+}
+
+:not(pre) > code {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 3px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 20em;
+}
+
+img.active {
+  box-shadow: 0 0 0 2px blue;
+}
+
+blockquote {
+  border-left: 2px solid #ddd;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 10px;
+  color: #aaa;
+  font-style: italic;
+}
+
+blockquote[dir='rtl'] {
+  border-left: none;
+  padding-left: 0;
+  padding-right: 10px;
+  border-right: 2px solid #ddd;
+}
+
+input {
+  box-sizing: border-box;
+  font-size: 0.85em;
+  width: 100%;
+  padding: 0.5em;
+  border: 2px solid #ddd;
+  background: #fafafa;
+}
+
+input:focus {
+    outline: 0;
+    border-color: blue;
+}
+
+a, a:hover {
+  color: #eb8205;
+}
+
+/**
+ * Icons.
+ */
+
+.menu > * {
+  display: inline-block;
+}
+
+.menu > * + * {
+  margin-left: 10px;
+}
+
+.btn-active {
+  color: #0c0c0c;
+  cursor: pointer;
+}
+
+.btn-active[data-active='true'] {
+  color: #eb8205;
+}
+
+/******* layout ***/
+.seafile-editor {
+  /*
+    reference: https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block
+    using `position: fixed` to make eafile-editor's containing block
+    the initial containing block (on screens, the viewport).
+    Thus, the editor's dimensions change based on the size of the browser window.
+  */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  min-width: 960px;
+}
+
+.seafile-editor-topbar {
+  width: 100%;
+  height: 68px;
+  background-color: #fff;
+  padding: 18px 10px;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 3px 2px -2px rgba(200,200,200,.15);
+  user-select: none;
+}
+
+.seafile-editor-main {
+  height: calc(100% - 68px);
+  width: 100%;
+}
+
+
+/*
+.container-fluid {
+  position: relative;
+  height: 100%;
+  background-color: rgb(250,250,249);
+}
+*/
+
+.seafile-editor-left-panel {
+  height: 100%;
+  background-color: #fff;
+  border-right: 1px solid rgb(230,230,221);
+}
+.seafile-editor-right-panel {
+  height: 100%;
+  background-color: rgb(250,250,249);
+  overflow-x: hidden;
+  position: relative; /* for seafile-editor-resize */
+}
+.seafile-editor-resize {
+  height: 100%;
+  width: 3px;
+  background-color: transparent;
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: e-resize;
+}
+
+.editor-container {
+  /* this container is needed to show the scroll bar */
+  height: 100%;
+  overflow-y: auto;
+}
+.editor {
+  min-height: calc(100% - 40px);
+  background: #fff;
+  padding:30px 30px 15px;
+  margin: 20px 40px;
+  border: 1px solid rgb(230,230,221);
+}
+.plain-editor-left-panel {
+  height: 100%;
+  width: 50%;
+  background-color: #fff;
+  border-right: 1px solid rgb(230,230,221);
+  overflow-y: auto;
+}
+.plain-editor-right-panel {
+  height: 100%;
+  width: 50%;
+  background-color: rgb(250,250,249);
+  overflow-x: hidden;
+}
+
+/*topbar style*/
+
+.tableToolBar {
+  font-size: 12px;
+}
+
+.tableToolBar div .symbol {
+  font-size: 14px;
+}
+
+.tableToolBar:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.tableToolBar div:not(first):not(.drop-list) {
+  /*display: inline-block;*/
+  margin-left:10px;
+}
+
+/*topbar style*/
+.title {
+  float: left;
+  width:128px;
+}
+
+.menu {
+  display: inline-block;
+  margin-right: 20px;
+  float: right;
+}
+
+/* tree view */
+.tree-node-inner {
+  position: relative;
+  padding-left: 12px;
+}
+.tree-node .collapse-node {
+  position: absolute;
+  left: 0;
+  top: -9px;
+  cursor: pointer;
+}
+.tree-node .caret-right, .tree-node .caret-down {
+  font-size: 24px;
+}
+.tree-node .caret-right:before {
+  content: '\25B8';
+}
+.tree-node .caret-down:before {
+  content: '\25BE';
+}
+
+.tree-node-icon {
+  margin-right: 0.4rem;
+  margin-left: 0.1rem;
+  display: inline-block;
+  width: 1rem;
+  text-align: center;
+}
+
+/**** article ****/
+.article {
+  padding:40px 60px 40px 60px;
+  font-size:14px;
+  line-height:1.6;
+  color:#333;
+}
+.article h2,
+.article h3,
+.article h4,
+.article h5,
+.article h6 {
+  margin: 1.2em 0 0.4em;
+  color:#333;
+  font-weight:bold;
+}
+.article h2 {
+  border-bottom: 1px solid #ccc;
+  line-height: 1.5;
+}
+.article h1 + p, .article h2 + p, .article h3 + p, .article h4 + p, .article h5 + p, .article h6 + p,
+.article h1 + pre, .article h2 + pre, .article h3 + pre, .article h4 + pre, .article h5 + pre, .article h6 + pre,
+.article h1 + ul, .article h2 + ul, .article h3 + ul, .article h4 + ul, .article h5 + ul, .article h6 + ul,
+.article h1 + ol, .article h2 + ol, .article h3 + ol, .article h4 + ol, .article h5 + ol, .article h6 + ol {
+  margin-top: 0;
+}
+.article p {
+  margin:0.8em 0;
+  white-space:pre-wrap;
+}
+.article ul {
+  list-style-type:disc;
+}
+.article ul,
+.article ol {
+  padding-left:2em;
+  margin:0.5em 0;
+}
+.article li p:first-child {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.article pre {
+  font-size:13px;
+  padding:5px 10px;
+  background:#f8f8f8;
+  border:1px solid #ddd;
+  border-radius:3px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  margin:1em 0;
+}
+
+.article .code p {
+  white-space:pre-wrap;
+  padding:0;
+  margin:0;
+  border:none;
+}
+
+.article a {
+  font-weight:normal;
+}
+
+.article blockquote {
+  color: #777;
+  padding: 0 15px;
+  border-left: 4px solid #DDD;
+  margin: 1.2em 0;
+}
+
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+.article tr:nth-child(2n) {
+  background-color: #F8F8F8;
+}
+.article th,
+.article td {
+  padding:6px 13px;
+}
+.article table p {
+  margin: 0;
+}
+.article table tr, .article table th {
+  display: flex;
+}
+
+.article table td, .article table th {
+  flex: 1;
+  padding: 10px 10px;
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #ccc;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.article hr.active {
+  border-top: 1px solid #eb8205;
+}
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #eb8205;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 28px;
+    left: 28px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: -1px;
+    left: -1px;
+    width: 58px;
+    height: 58px;
+    opacity: 0;
+  }
+}
+.empty-loading-page {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+.page-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
